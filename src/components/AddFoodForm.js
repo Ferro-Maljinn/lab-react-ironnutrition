@@ -4,52 +4,60 @@ import { Divider, Input } from 'antd';
 
 export function AddFoodForm(props) {
   const { addNewFood } = props;
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [calories, setCalories] = useState(0);
-  const [servings, setServings] = useState(0);
+  const [newFood, setNewFood] = useState({
+      name: '',
+      image: '',
+      calories: 0,
+      servings: 0
+  });
 
-  const nameHandler = (elem) => setName(elem.target.value);
-  const imageHandler = (elem) => setImage(elem.target.value);
-  const caloriesHandler = (elem) => setCalories(elem.target.value);
-  const servingsHandler = (elem) => setServings(elem.target.value);
+
+  const handleChange = (event) => {
+      const value = event.target.value;
+      //spreading new food,
+      setNewFood({
+          ...newFood, [event.target.name]: value,
+      })
+      console.log('here new food', newFood)
+  }
 
   const handleSubmit = (elem) => {
     elem.preventDefault();
-    let newFood = {
-      name,
-      image,
-      calories,
-      servings,
-    };
+
     addNewFood(newFood)
 
-    setName('');
-    setImage('');
-    setCalories(0);
-    setServings(0);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Divider>Add Food Entry</Divider>
       <h3>Name</h3>
-      <Input name="name" value={name} type="text" onChange={nameHandler} />
+      <Input
+        name="name"
+        value={newFood.name}
+        type="text"
+        onChange={handleChange}
+      />
       <h3>Image</h3>
-      <Input name="image" value={image} type="text" onChange={imageHandler} />
+      <Input
+        name="image"
+        value={newFood.image}
+        type="text"
+        onChange={handleChange}
+      />
       <h3>Calories</h3>
       <Input
         name="calories"
-        value={calories}
+        value={newFood.calories}
         type="number"
-        onChange={caloriesHandler}
+        onChange={handleChange}
       />
       <h3>Servings</h3>
       <Input
         name="servings"
-        value={servings}
+        value={newFood.servings}
         type="number"
-        onChange={servingsHandler}
+        onChange={handleChange}
       />
       <br></br>
       <button className="btn" type="submit">
