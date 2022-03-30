@@ -3,7 +3,7 @@ import React from 'react';
 
 export function FoodBox(props){
     return (
-        <Col>
+        <Col >
           <Card
             title={props.food.name}
             style={{ width: 230, height: 300, margin: 10 }}
